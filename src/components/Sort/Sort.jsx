@@ -7,7 +7,6 @@ function Sort() {
   const listName = list[sortId];
 
   const handleSortBy = (id) => {
-    console.log(id);
     setSortId(id);
     setIsPopupVisible(false);
   };
