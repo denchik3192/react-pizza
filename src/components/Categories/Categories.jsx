@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-function Categories() {
-  const [activeCategoryId, setActiveCategoryId] = useState(0);
-
+function Categories({ category, setCategory }) {
   const categoryData = [
     { id: 0, name: 'Все' },
     { id: 1, name: 'Мясные' },
@@ -15,9 +13,9 @@ function Categories() {
   const categoryList = categoryData.map((c) => {
     return (
       <li
-        className={c.id === activeCategoryId ? 'active' : ''}
+        className={c.id === category ? 'active' : ''}
         key={c.id}
-        onClick={() => setActiveCategoryId(c.id)}>
+        onClick={() => setCategory(c.id)}>
         {c.name}
       </li>
     );

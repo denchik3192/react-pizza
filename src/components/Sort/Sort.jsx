@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
-function Sort() {
+function Sort({ sort, setSort }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [sortId, setSortId] = useState(0);
-  const list = ['популярности', 'цене', 'алфавиту'];
-  const listName = list[sortId];
+  const list = [
+    { name: 'популярности', sortProperty: 'raiting' },
+    { name: 'цене', sortProperty: 'price' },
+    { name: 'алфавиту', sortProperty: 'title' },
+  ];
 
-  const handleSortBy = (id) => {
-    setSortId(id);
+  const handleSortBy = (obj) => {
+    setSort(obj);
     setIsPopupVisible(false);
   };
 
@@ -26,14 +28,17 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsPopupVisible(!isPopupVisible)}>{listName}</span>
+        <span onClick={() => setIsPopupVisible(!isPopupVisible)}>{sort.name}</span>
       </div>
       {isPopupVisible && (
         <div className="sort__popup">
           <ul>
-            {list.map((sortName, i) => (
-              <li className={i === sortId ? 'active' : ''} key={i} onClick={() => handleSortBy(i)}>
-                {sortName}
+            {list.map((obj, i) => (
+              <li
+                className={obj.sortProperty === sort.sortProperty ? 'active' : ''}
+                key={i}
+                onClick={() => handleSortBy(obj)}>
+                {obj.name}
               </li>
             ))}
           </ul>

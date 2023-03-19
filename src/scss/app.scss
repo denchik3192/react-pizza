@@ -27,10 +27,10 @@ body {
   &__items {
     
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      // grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       grid-template-rows: repeat(2, 1fr);
-      grid-column-gap: 20px;
-      grid-row-gap: 20px;
+      grid-column-gap: 11px;
       
   }
   // &__items {
