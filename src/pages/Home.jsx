@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Categories from '../components/Categories/Categories';
+import Pagination from '../components/Pagination/Pagination';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort/Sort';
@@ -8,7 +9,7 @@ import Sort from '../components/Sort/Sort';
 function Home() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [sort, setSort] = useState({
     name: 'популярности',
     sortProperty: 'raiting',
@@ -19,7 +20,7 @@ function Home() {
   useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?${
+      `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${
         category > 0 ? `category=${category}` : ''
       }&sortBy=${sort.sortProperty}&order=desc`,
     )
@@ -31,7 +32,7 @@ function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [category, sort]);
+  }, [category, sort, currentPage]);
 
   return (
     <>
@@ -45,6 +46,7 @@ function Home() {
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
           : items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
       </div>
+      <Pagination onPageChange={(page) => setCurrentPage(page)} />
     </>
   );
 }
