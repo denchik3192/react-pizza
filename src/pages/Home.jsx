@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Categories from '../components/Categories/Categories';
 import Pagination from '../components/Pagination/Pagination';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort/Sort';
+import { SearchContext } from '../Context/SearchContext';
 
 function Home() {
+  const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +24,7 @@ function Home() {
     fetch(
       `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${
         category > 0 ? `category=${category}` : ''
-      }&sortBy=${sort.sortProperty}&order=desc`,
+      }&sortBy=${sort.sortProperty}&order=desc&search=${searchValue}`,
     )
       .then((res) => {
         return res.json();
@@ -32,7 +34,7 @@ function Home() {
         setIsLoading(false);
       });
     // window.scrollTo(0, 0);
-  }, [category, sort, currentPage]);
+  }, [category, sort, currentPage, searchValue]);
 
   return (
     <>

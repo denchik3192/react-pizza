@@ -16,7 +16,6 @@ function Header() {
           </div>
         </Link>
         <Search />
-        {/* 29:29 */}
 
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
