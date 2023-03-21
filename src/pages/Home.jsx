@@ -31,7 +31,7 @@ function Home() {
         setItems(arr);
         setIsLoading(false);
       });
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [category, sort, currentPage]);
 
   return (

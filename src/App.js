@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Header from './components/Header/Header';
 import './scss/app.scss';
 
@@ -6,12 +6,16 @@ import { Route, Routes } from 'react-router-dom';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import { SearchContext } from './Context/SearchContext';
 
 function App() {
+  // const inputValue = useContext(SearchValue)
+  // const [inputValue, setInputValue] = useState('');
+
   return (
+    <SearchContext.Provider value = ''>
     <div className="wrapper">
       <Header />
-
       <div className="content">
         <div className="container">
           <Routes>
@@ -23,6 +27,7 @@ function App() {
         </div>
       </div>
     </div>
+    </SearchContext.Provider>
   );
 }
 
