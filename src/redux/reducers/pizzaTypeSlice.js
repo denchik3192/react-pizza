@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pizzatype: 'all',
+  pizzatype: 0,
 };
 
 const pizzaTypeSlice = createSlice({
   name: 'pizzaType',
-  initialState,
+  initialState: initialState,
   reducers: {
     setPizzaType: (state, action) => {
+      console.log(action.payload);
       state.pizzatype = action.payload;
     },
   },
@@ -16,4 +17,4 @@ const pizzaTypeSlice = createSlice({
 
 export const { setPizzaType } = pizzaTypeSlice.actions;
 
-export default pizzaTypeSlice;
+export default pizzaTypeSlice.reducer;
