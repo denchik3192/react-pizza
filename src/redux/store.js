@@ -1,12 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import pizzaTypeSlice from './reducers/pizzaTypeSlice';
-
-const reducer = combineReducers({
-  type: pizzaTypeSlice,
-})
+import { configureStore } from '@reduxjs/toolkit';
+import pizzaTypeSlice from './reducers/filterSlice';
 
 const store = configureStore({
-  reducer,
-})
+  reducer: {
+    filter: pizzaTypeSlice,
+  },
+});
 
 export default store;

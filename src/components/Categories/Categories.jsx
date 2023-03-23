@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPizzaType } from '../../redux/reducers/pizzaTypeSlice';
+import { setCategoryId, setPizzaType } from '../../redux/reducers/filterSlice';
 
-// function Categories({ category, setCategory }) {
-function Categories() {
-  const category = useSelector(state => state.type.pizzatype);
-  console.log(category);
-  const dispatch = useDispatch();
+function Categories({ category, onChangeCategory }) {
   const categoryData = [
     { id: 0, name: 'Все' },
     { id: 1, name: 'Мясные' },
@@ -21,7 +17,7 @@ function Categories() {
       <li
         className={c.id === category ? 'active' : ''}
         key={c.id}
-        onClick={() => dispatch(setPizzaType(c.id))}>
+        onClick={() => onChangeCategory(c.id)}>
         {c.name}
       </li>
     );
