@@ -3,22 +3,22 @@ import qs from 'qs';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import Categories from '../components/Categories/Categories';
 import Pagination from '../components/Pagination/Pagination';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort/Sort';
 import { SearchContext } from '../Context/SearchContext';
-import { setCategoryId, setFilters, setSort } from '../redux/reducers/filterSlice';
+import { setCategoryId, setSort } from '../redux/reducers/filterSlice';
+import { getItems } from '../redux/reducers/pizzasSlice';
 
 function Home() {
   // skip 15
+  const items = useSelector((state) => state.pizzas.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
   const { searchValue } = useContext(SearchContext);
-  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const onChangeCategory = (id) => {
@@ -35,18 +35,36 @@ function Home() {
     }
   }, []);
 
+  async function fetchPizzas() {
+    try {
+      dispatch(
+        getItems({
+          currentPage,
+          categoryId,
+          sort,
+          searchValue,
+        }),
+      );
+    } catch (error) {
+      alert('Ошибка при получении пиц');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(
-        `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${
-          categoryId > 0 ? `category=${categoryId}` : ''
-        }&sortBy=${sort.sortProperty}&order=desc&search=${searchValue}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+    fetchPizzas();
+    // axios
+    //   .get(
+    //     `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${
+    //       categoryId > 0 ? `category=${categoryId}` : ''
+    //     }&sortBy=${sort.sortProperty}&order=desc&search=${searchValue}`,
+    //   )
+    //   .then((res) => {
+    //     setItems(res.data);
+    //     setIsLoading(false);
+    //   });
     window.scrollTo(0, 0);
   }, [categoryId, sort, currentPage, searchValue]);
 
