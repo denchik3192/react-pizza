@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function Sort({ sort, setSort }) {
+  const sortRef = useRef();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const list = [
     { name: 'популярности', sortProperty: 'raiting' },
@@ -13,8 +14,19 @@ function Sort({ sort, setSort }) {
     setIsPopupVisible(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setIsPopupVisible(false);
+      }
+    };
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => document.body.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
