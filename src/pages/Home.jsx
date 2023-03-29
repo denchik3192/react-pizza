@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories/Categories';
 import Pagination from '../components/Pagination/Pagination';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
@@ -87,7 +87,11 @@ function Home() {
       <div className="content__items">
         {isLoading
           ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-          : items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          : items?.map((obj) => (
+              <Link key={obj.id} to={`/pizza/${obj.id}`}>
+                <PizzaBlock {...obj} />
+              </Link>
+            ))}
       </div>
       <Pagination />
     </>
