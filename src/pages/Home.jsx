@@ -1,4 +1,3 @@
-import axios from 'axios';
 import qs from 'qs';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
