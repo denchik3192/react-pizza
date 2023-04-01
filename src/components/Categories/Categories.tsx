@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId, setPizzaType } from '../../redux/reducers/filterSlice';
+import React from 'react';
 
-function Categories({ category, onChangeCategory }) {
+type CategoriesProps = {
+  category: number;
+  onChangeCategory: (i: number) => void;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ category, onChangeCategory }) => {
   const categoryData = [
     { id: 0, name: 'Все' },
     { id: 1, name: 'Мясные' },
@@ -28,6 +31,6 @@ function Categories({ category, onChangeCategory }) {
       <ul>{categoryList}</ul>
     </div>
   );
-}
+};
 
 export default Categories;

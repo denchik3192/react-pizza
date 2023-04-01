@@ -2,7 +2,16 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/reducers/cartSlice';
 
-function CartItem({ id, title, price, type, count, imageUrl }) {
+type CartItemProps = {
+  id: string;
+  title: string;
+  price: number;
+  type: string;
+  count: number;
+  imageUrl: string;
+};
+
+const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, count, imageUrl }) => {
   const dispatch = useDispatch();
   const totalItemPrice = price * count;
 
@@ -85,6 +94,6 @@ function CartItem({ id, title, price, type, count, imageUrl }) {
       </div>
     </div>
   );
-}
+};
 
 export default CartItem;

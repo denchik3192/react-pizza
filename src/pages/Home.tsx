@@ -13,17 +13,17 @@ import { getItems } from '../redux/reducers/pizzasSlice';
 
 function Home() {
   // skip 15
-  const items = useSelector((state) => state.pizzas.items);
+  const items = useSelector((state: any) => state.pizzas.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+  const { categoryId, sort, currentPage } = useSelector((state: any) => state.filter);
   const { searchValue } = useContext(SearchContext);
   const [isLoading, setIsLoading] = useState(true);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
-  const onChangeSort = (obj) => {
+  const onChangeSort = (obj: any) => {
     dispatch(setSort(obj));
   };
 
@@ -37,6 +37,7 @@ function Home() {
   async function fetchPizzas() {
     try {
       dispatch(
+        //@ts-ignore
         getItems({
           currentPage,
           categoryId,
@@ -86,7 +87,7 @@ function Home() {
       <div className="content__items">
         {isLoading
           ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-          : items?.map((obj) => (
+          : items?.map((obj: any) => (
               <Link key={obj.id} to={`/pizza/${obj.id}`}>
                 <PizzaBlock {...obj} />
               </Link>

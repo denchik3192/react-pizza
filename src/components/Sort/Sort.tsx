@@ -1,21 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function Sort({ sort, setSort }) {
-  const sortRef = useRef();
+interface SortProps {//fix any
+  sort: any,
+  setSort: any,
+}
+
+function Sort({ sort, setSort}: SortProps) {
+  const sortRef = useRef<HTMLDivElement>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const list = [
+
+  type SortItem = {
+    name: string,
+    sortProperty: string,
+  };
+
+  const list: SortItem[] = [
     { name: 'популярности', sortProperty: 'raiting' },
     { name: 'цене', sortProperty: 'price' },
     { name: 'алфавиту', sortProperty: 'title' },
   ];
 
-  const handleSortBy = (obj) => {
+  const handleSortBy = (obj: SortItem) => {
     setSort(obj);
     setIsPopupVisible(false);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setIsPopupVisible(false);
       }

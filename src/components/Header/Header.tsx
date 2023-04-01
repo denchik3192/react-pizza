@@ -2,10 +2,16 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/img/pizza-logo.svg';
 import Search from '../Search/Search';
+interface Ecart {
+  cart: {
+    items: [],
+    totalPrice: number,
+  },
+}
 
 function Header() {
-  const { totalPrice, items } = useSelector((state) => state.cart);
-  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
+  const { totalPrice, items } = useSelector((state: Ecart) => state.cart);
+  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
   const location = useLocation();
   console.log(location);
 

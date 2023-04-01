@@ -4,10 +4,10 @@ import CartEmty from '../components/CartEmty';
 import CartItem from '../components/CartItem';
 import { deleteItems } from '../redux/reducers/cartSlice';
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const { items, totalPrice } = useSelector((state) => state.cart);
-  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
+  const { items, totalPrice } = useSelector((state: any) => state.cart);
+  const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
 
   if (items.length === 0) {
     return <CartEmty />;
@@ -50,7 +50,7 @@ function Cart() {
               </svg>
               Корзина
             </h2>
-            <div className="cart__clear" onClick={() => dispatch(deleteItems())}>
+            <div className="cart__clear" onClick={() => dispatch(deleteItems([]))}>
               <svg
                 width="20"
                 height="20"
@@ -91,7 +91,7 @@ function Cart() {
             </div>
           </div>
           <div className="content__items">
-            {items.map((item) => (
+            {items.map((item: any) => (
               <CartItem {...item} key={item.id} />
             ))}
           </div>
@@ -136,6 +136,6 @@ function Cart() {
       </div> */}
     </>
   );
-}
+};
 
 export default Cart;
