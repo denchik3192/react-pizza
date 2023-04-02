@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import CartEmty from '../components/CartEmty';
 import CartItem from '../components/CartItem';
 import { deleteItems } from '../redux/reducers/cartSlice';
+import { RootState } from '../redux/store';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const { items, totalPrice } = useSelector((state: any) => state.cart);
+  const { items, totalPrice } = useSelector((state: RootState) => state.cart);
   const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
 
   if (items.length === 0) {
@@ -50,7 +51,7 @@ const Cart: React.FC = () => {
               </svg>
               Корзина
             </h2>
-            <div className="cart__clear" onClick={() => dispatch(deleteItems([]))}>
+            <div className="cart__clear" onClick={() => dispatch(deleteItems())}>
               <svg
                 width="20"
                 height="20"

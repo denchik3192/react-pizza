@@ -10,13 +10,14 @@ import Sort from '../components/Sort/Sort';
 import { SearchContext } from '../Context/SearchContext';
 import { setCategoryId, setSort } from '../redux/reducers/filterSlice';
 import { getItems } from '../redux/reducers/pizzasSlice';
+import { RootState, useAppDispatch } from '../redux/store';
 
 function Home() {
   // skip 15
   const items = useSelector((state: any) => state.pizzas.items);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { categoryId, sort, currentPage } = useSelector((state: any) => state.filter);
+  const dispatch = useAppDispatch();
+  const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
   const { searchValue } = useContext(SearchContext);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -55,16 +56,6 @@ function Home() {
   useEffect(() => {
     setIsLoading(true);
     fetchPizzas();
-    // axios
-    //   .get(
-    //     `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${
-    //       categoryId > 0 ? `category=${categoryId}` : ''
-    //     }&sortBy=${sort.sortProperty}&order=desc&search=${searchValue}`,
-    //   )
-    //   .then((res) => {
-    //     setItems(res.data);
-    //     setIsLoading(false);
-    //   });
     window.scrollTo(0, 0);
   }, [categoryId, sort, currentPage, searchValue]);
 
@@ -88,9 +79,9 @@ function Home() {
         {isLoading
           ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
           : items?.map((obj: any) => (
-              <Link key={obj.id} to={`/pizza/${obj.id}`}>
+              <div key={obj.id}>
                 <PizzaBlock {...obj} />
-              </Link>
+              </div>
             ))}
       </div>
       <Pagination />

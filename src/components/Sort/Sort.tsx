@@ -1,17 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-interface SortProps {//fix any
-  sort: any,
-  setSort: any,
+interface SortProps {
+  //fix any
+  sort: any;
+  setSort: any;
 }
+// type PopuoClick = React.MouseEvent<HTMLBodyElement> & {
+//   path: Node[];
+// };
 
-function Sort({ sort, setSort}: SortProps) {
+function Sort({ sort, setSort }: SortProps) {
   const sortRef = useRef<HTMLDivElement>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   type SortItem = {
-    name: string,
-    sortProperty: string,
+    name: string;
+    sortProperty: string;
   };
 
   const list: SortItem[] = [
