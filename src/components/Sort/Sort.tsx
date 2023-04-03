@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 interface SortProps {
   //fix any
@@ -9,7 +9,7 @@ interface SortProps {
 //   path: Node[];
 // };
 
-function Sort({ sort, setSort }: SortProps) {
+const Sort = memo(({ sort, setSort }: SortProps) => {
   const sortRef = useRef<HTMLDivElement>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -73,6 +73,6 @@ function Sort({ sort, setSort }: SortProps) {
       )}
     </div>
   );
-}
+});
 
 export default Sort;

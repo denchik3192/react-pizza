@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories/Categories';
@@ -21,9 +21,10 @@ function Home() {
   const { searchValue } = useContext(SearchContext);
   const [isLoading, setIsLoading] = useState(true);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
+
   const onChangeSort = (obj: any) => {
     dispatch(setSort(obj));
   };

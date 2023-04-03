@@ -164,6 +164,9 @@ body {
       width: 13%;
 
       &-minus {
+        &--disabled {
+          pointer-events: none
+        }
         svg {
           path:first-of-type {
             display: none;

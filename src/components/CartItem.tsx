@@ -20,6 +20,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, count, imag
       dispatch(removeItem(id));
     }
   };
+
+  // const minusCartItem = () => {
+  //   if (window.confirm('Удалить?')) {
+  //     dispatch(removeItem(id));
+  //   }
+  // };
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -30,7 +36,8 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, count, imag
         <p>{type}, 26 см.</p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={count === 1}
           className="button button--outline button--circle cart__item-count-minus"
           onClick={() => dispatch(minusItem(id))}>
           <svg
@@ -48,9 +55,9 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, count, imag
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-plus"
           onClick={() => dispatch(addItem({ id } as TCartItem))}>
           <svg
@@ -68,7 +75,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, type, count, imag
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{totalItemPrice} ₽</b>
