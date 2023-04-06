@@ -4,6 +4,7 @@ import CartEmty from '../components/CartEmty';
 import CartItem from '../components/CartItem';
 import { deleteItems } from '../redux/reducers/cartSlice';
 import { RootState } from '../redux/store';
+import { Link } from 'react-router-dom';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const Cart: React.FC = () => {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <a href="/" className="button button--outline button--add go-back-btn">
+              <Link to={'/'} className="button button--outline button--add go-back-btn">
                 <svg
                   width="8"
                   height="14"
@@ -125,7 +126,7 @@ const Cart: React.FC = () => {
                 </svg>
 
                 <span>Вернуться назад</span>
-              </a>
+              </Link>
               <div className="button pay-btn">
                 <span>Оплатить сейчас</span>
               </div>
