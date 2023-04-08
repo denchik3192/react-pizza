@@ -22,6 +22,7 @@ type TPizzaItem = {
 
 interface Ipizza {
   items: TPizzaItem[],
+  searchValue: string,
   status: 'loading' | 'sucsess' | 'rejected';
   error: string,
 }
@@ -49,6 +50,7 @@ export const getItems = createAsyncThunk<TPizzaItem[], TFetchPizzaArgs>(
 
 const initialState: Ipizza = {
   items: [],
+  searchValue: '',
   status: 'sucsess',
   error: '',
 }
@@ -60,6 +62,9 @@ const pizzasSlice = createSlice({
   reducers: {
     setItems(state, action: PayloadAction<TPizzaItem[]>) {
       state.items = action.payload;
+    },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
     },
   },
 
@@ -79,5 +84,5 @@ const pizzasSlice = createSlice({
   },
 });
 
-export const { setItems } = pizzasSlice.actions;
+export const { setItems, setSearchValue } = pizzasSlice.actions;
 export default pizzasSlice.reducer;

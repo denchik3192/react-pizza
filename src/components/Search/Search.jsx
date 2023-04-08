@@ -1,11 +1,13 @@
 import debounce from 'lodash.debounce';
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { SearchContext } from '../../Context/SearchContext';
 import s from './search.module.scss';
+import { setSearchValue } from '../../redux/reducers/pizzasSlice';
+import { useDispatch } from 'react-redux';
 
 function Search() {
-  const { SetSearchValue } = useContext(SearchContext);
+  // const { SetSearchValue } = useContext(SearchContext);
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
   // const inputRef = useRef();
 
   // const clearSearch = () => {
@@ -14,7 +16,8 @@ function Search() {
   // }
   const updateSearchValue = useCallback(
     debounce((str) => {
-      SetSearchValue(str);
+      dispatch(setSearchValue(str));
+      // SetSearchValue(str);
     }, 500),
     [],
   );

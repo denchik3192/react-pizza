@@ -1,24 +1,22 @@
 import qs from 'qs';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories/Categories';
 import Pagination from '../components/Pagination/Pagination';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort/Sort';
-import { SearchContext } from '../Context/SearchContext';
 import { setCategoryId, setSort } from '../redux/reducers/filterSlice';
 import { getItems } from '../redux/reducers/pizzasSlice';
 import { RootState, useAppDispatch } from '../redux/store';
 
 function Home() {
-  // skip 15
   const items = useSelector((state: any) => state.pizzas.items);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
-  const { searchValue } = useContext(SearchContext);
+  const searchValue = useSelector((state: RootState) => state.pizzas.searchValue);
   const [isLoading, setIsLoading] = useState(true);
 
   const onChangeCategory = useCallback((id: number) => {
@@ -39,7 +37,6 @@ function Home() {
   async function fetchPizzas() {
     try {
       dispatch(
-        //@ts-ignore
         getItems({
           currentPage,
           categoryId,
