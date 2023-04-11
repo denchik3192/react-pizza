@@ -7,8 +7,8 @@ type PizzaBlockProps = {
   id: string;
   title: string;
   price: number;
-  types: number[];
-  sizes: number[];
+  types: string[];
+  sizes: string[];
   imageUrl: string;
   // count: number;
 };
@@ -23,12 +23,14 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   // count,
 }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state: RootState) =>
-    state.cart.items.find((items: any) => items.id === id),
+  const cartItems = useSelector((state: RootState) =>
+    state.cart.items.filter((items: any) => items.id === id),
   );
-  const totalCount = cartItem ? cartItem.count : 0;
+
+  const totalCount = cartItems.reduce((sum, obj) => (sum += obj.count), 0);
 
   const typesNames = ['тонкое', 'традиционное'];
+  const sizeTypes = ['26', '30', '40'];
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(0);
 
@@ -38,8 +40,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
       price,
       title,
       imageUrl,
-      types: typesNames[pizzaType],
-      sizes,
+      types: [typesNames[pizzaType]],
+      sizes: [sizeTypes[pizzaSize]],
       count: 0,
     };
     dispatch(addItem(item));
@@ -59,7 +61,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
               className={pizzaType === index ? 'active' : ''}
               key={index}
               onClick={() => setPizzaType(index)}>
-              {typesNames[type]}
+              {typesNames[+type]}
             </li>
           ))}
         </ul>

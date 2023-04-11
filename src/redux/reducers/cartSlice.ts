@@ -6,8 +6,8 @@ export type TCartItem = {
   id: string;
   title: string;
   price: number;
-  types: string;
-  sizes: number[];
+  types: string[];
+  sizes: string[];
   imageUrl: string;
   count: number;
 }
@@ -20,8 +20,8 @@ interface ICartItem {
 const { items, totalPrice } = getCartFromLS()
 
 const initialState: ICartItem = {
-  totalPrice,
-  items,
+  totalPrice: totalPrice,
+  items: items,
 };
 
 const cartSlice = createSlice({
@@ -29,17 +29,21 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addItem: (state, action: PayloadAction<TCartItem>) => {
-      console.log(action.payload);
 
-      const findItem = state.items.find((obj) => obj.id === action.payload.id);
+      const findItem = state.items.find((pizza) => {
+        return pizza.id === action.payload.id &&
+          pizza.sizes.includes(String(...action.payload.sizes)) &&
+          pizza.types.includes(String(...action.payload.types))
+      });
+
       if (findItem) {
         findItem.count++;
       } else {
         state.items.push({ ...action.payload, count: 1 });
       }
-
-      state.totalPrice = getTotalPrice(state.items)
+      state.totalPrice = getTotalPrice(state.items);
     },
+
     minusItem: (state, action: PayloadAction<string>) => {
       const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem && findItem.count > 1) {
