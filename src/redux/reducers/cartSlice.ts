@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getCartFromLS } from '../../utils/getCartFromLS';
 import { getTotalPrice } from '../../utils/getTotalPrice';
+import { findItemFromCart } from '../../utils/findItemFromCart';
 
 export type TCartItem = {
   id: string;
@@ -45,11 +46,13 @@ const cartSlice = createSlice({
     },
 
     minusItem: (state, action: PayloadAction<TCartItem>) => {
+
       const findItem = state.items.find((pizza) => {
         return pizza.id === action.payload.id &&
           pizza.sizes.includes(String(...action.payload.sizes)) &&
           pizza.types.includes(String(...action.payload.types))
       });
+      // const findItem = findItemFromCart(state, action)
 
       // const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem && findItem.count > 1) {

@@ -22,12 +22,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, types, count, ima
       dispatch(
         removeItem({
           id,
-          title: title,
-          price: price,
-          types: types,
-          sizes: sizes,
-          imageUrl: imageUrl,
-          count: 0,
+          title,
+          price,
+          types,
+          sizes,
+          imageUrl,
+          count,
         }),
       );
     }
@@ -51,12 +51,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, types, count, ima
                 dispatch(
                   minusItem({
                     id,
-                    title: title,
-                    price: price,
-                    types: types,
-                    sizes: sizes,
-                    imageUrl: imageUrl,
-                    count: 0,
+                    title,
+                    price,
+                    types,
+                    sizes,
+                    imageUrl,
+                    count,
                   }),
                 )
               }>
@@ -83,12 +83,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, price, types, count, ima
                 dispatch(
                   addItem({
                     id,
-                    title: title,
-                    price: price,
-                    types: types,
-                    sizes: sizes,
-                    imageUrl: imageUrl,
-                    count: 0,
+                    title,
+                    price,
+                    types,
+                    sizes,
+                    imageUrl,
+                    count,
                   }),
                 )
               }>
