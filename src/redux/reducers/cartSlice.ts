@@ -44,8 +44,14 @@ const cartSlice = createSlice({
       state.totalPrice = getTotalPrice(state.items);
     },
 
-    minusItem: (state, action: PayloadAction<string>) => {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    minusItem: (state, action: PayloadAction<TCartItem>) => {
+      const findItem = state.items.find((pizza) => {
+        return pizza.id === action.payload.id &&
+          pizza.sizes.includes(String(...action.payload.sizes)) &&
+          pizza.types.includes(String(...action.payload.types))
+      });
+
+      // const findItem = state.items.find((obj) => obj.id === action.payload);
       if (findItem && findItem.count > 1) {
         findItem.count--;
       } else {
@@ -54,9 +60,15 @@ const cartSlice = createSlice({
       state.totalPrice = getTotalPrice(state.items);
     },
 
-    removeItem: (state, action: PayloadAction<string>) => {
+    removeItem: (state, action: PayloadAction<TCartItem>) => {
+      const findItem = state.items.find((pizza) => {
+        return pizza.id === action.payload.id &&
+          pizza.sizes.includes(String(...action.payload.sizes)) &&
+          pizza.types.includes(String(...action.payload.types))
+      });
+
       state.items = state.items.filter((item) => {
-        return item.id !== action.payload;
+        return item !== findItem;
       });
       state.totalPrice = getTotalPrice(state.items)
     },
