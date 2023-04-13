@@ -12,12 +12,11 @@ import { getItems } from '../redux/reducers/pizzasSlice';
 import { RootState, useAppDispatch } from '../redux/store';
 
 function Home() {
-  const items = useSelector((state: any) => state.pizzas.items);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { status, items } = useSelector((state: RootState) => state.pizzas);
   const { categoryId, sort, currentPage } = useSelector((state: RootState) => state.filter);
   const searchValue = useSelector((state: RootState) => state.pizzas.searchValue);
-  const [isLoading, setIsLoading] = useState(true);
 
   const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
@@ -47,12 +46,10 @@ function Home() {
     } catch (error) {
       alert('Ошибка при получении пиц');
     } finally {
-      setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    setIsLoading(true);
     fetchPizzas();
     window.scrollTo(0, 0);
   }, [categoryId, sort, currentPage, searchValue]);
@@ -66,6 +63,13 @@ function Home() {
     navigate(`?${qeryString}`);
   }, [categoryId, sort, currentPage, searchValue, navigate]);
 
+  const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
+  const pizzas = items?.map((obj: any) => (
+    <div key={obj.id}>
+      <PizzaBlock {...obj} />
+    </div>
+  ));
+
   return (
     <>
       <div className="content__top">
@@ -73,15 +77,7 @@ function Home() {
         <Sort sort={sort} setSort={onChangeSort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-          : items?.map((obj: any) => (
-              <div key={obj.id}>
-                <PizzaBlock {...obj} />
-              </div>
-            ))}
-      </div>
+      <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
       <Pagination />
     </>
   );

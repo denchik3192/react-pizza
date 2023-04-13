@@ -51,7 +51,7 @@ export const getItems = createAsyncThunk<TPizzaItem[], TFetchPizzaArgs>(
 const initialState: Ipizza = {
   items: [],
   searchValue: '',
-  status: 'sucsess',
+  status: 'loading',
   error: '',
 }
 
