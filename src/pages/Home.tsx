@@ -1,5 +1,5 @@
 import qs from 'qs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories/Categories';
@@ -34,13 +34,16 @@ function Home() {
   }, []);
 
   async function fetchPizzas() {
+    const sortBy = sort.sortProperty.replace('-', '');
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     try {
       dispatch(
         getItems({
           currentPage,
           categoryId,
-          sort,
+          sortBy,
           searchValue,
+          order,
         }),
       );
     } catch (error) {

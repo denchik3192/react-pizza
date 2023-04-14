@@ -16,12 +16,14 @@ type TSort = {
 interface IFilter {
   categoryId: number,
   currentPage: number,
+  searchValue: string,
   sort: TSort,
 }
 
 const initialState: IFilter = {
   categoryId: 0,
   currentPage: 1,
+  searchValue: '',
   sort: {
     name: 'популярности',
     sortProperty: SortPropertyEnum.RATING_DESC,
@@ -44,9 +46,12 @@ const filterSlice = createSlice({
     setFilters: (state, action: PayloadAction<any>) => {
       state.currentPage = action.payload.currentPage;
     },
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
   },
 });
 
-export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions;
+export const { setCategoryId, setSort, setCurrentPage, setFilters, setSearchValue } = filterSlice.actions;
 
 export default filterSlice.reducer;

@@ -1,23 +1,17 @@
 import debounce from 'lodash.debounce';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import s from './search.module.scss';
-import { setSearchValue } from '../../redux/reducers/pizzasSlice';
+
 import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/reducers/filterSlice';
 
 function Search() {
-  // const { SetSearchValue } = useContext(SearchContext);
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
-  // const inputRef = useRef();
 
-  // const clearSearch = () => {
-  //   SetSearchValue('');
-  //   inputRef.current.focus()
-  // }
   const updateSearchValue = useCallback(
     debounce((str) => {
       dispatch(setSearchValue(str));
-      // SetSearchValue(str);
     }, 500),
     [],
   );
@@ -30,7 +24,6 @@ function Search() {
   return (
     <div className={s.search}>
       <input
-        // ref={inputRef}
         type="search"
         name="search"
         id="search"
@@ -38,7 +31,6 @@ function Search() {
         value={value}
         onChange={onChaneInput}
       />
-      {/* <svg onclick={clearSearch}></svg> */}
     </div>
   );
 }

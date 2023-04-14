@@ -4,11 +4,10 @@ import axios from 'axios';
 type TFetchPizzaArgs = {
   currentPage: number,
   categoryId: number,
-  sort: {
-    name: string,
-    sortProperty: string,
-  },
+  sortBy: string,
+
   searchValue: string,
+  order: string,
 }
 type TPizzaItem = {
   id: string;
@@ -29,13 +28,13 @@ interface Ipizza {
 
 export const getItems = createAsyncThunk<TPizzaItem[], TFetchPizzaArgs>(
   'pizzas/fetchItems',
-  async function ({ currentPage, categoryId, sort, searchValue }, { rejectedWithValue }: any) {
-    console.log(sort);
+  async function ({ currentPage, categoryId, sortBy, searchValue, order }, { rejectedWithValue }: any) {
+    // console.log(sort);
 
     try {
       const response = await axios.get<TPizzaItem>(
         `https://6415ca5bc42f59a203a72f6d.mockapi.io/items?page=${currentPage}&limit=4&${categoryId > 0 ? `category=${categoryId}` : ''
-        }&sortBy=${sort.sortProperty}&order=desc&search=${searchValue}`,
+        }&sortBy=${sortBy}&order=${order}&search=${searchValue}`,
       );
       if (response.status !== 200) {
         throw new Error('Server Error!');
