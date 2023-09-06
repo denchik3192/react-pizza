@@ -15,6 +15,7 @@ function Header() {
   const totalCount = items.reduce((sum: number, item: any) => item.count + sum, 0);
   const location = useLocation();
   const isMounted = useRef(false);
+  const error = true;
 
   useEffect(() => {
     if (isMounted.current) {
@@ -23,6 +24,10 @@ function Header() {
     }
     isMounted.current = true;
   }, [items]);
+
+  const isDotDotDotTo = () => {
+    return new Error('sdsdsds');
+  };
 
   return (
     <div className="header">
